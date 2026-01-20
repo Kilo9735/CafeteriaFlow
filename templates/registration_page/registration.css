@@ -1,4 +1,9 @@
-.registr_block {
-    border-radius: 15px;
+.registr_block
+{
+    border-radius: 15px;      /* Скругление */
+    background-color: #f0f0f0;/* Цвет фона */
+    padding: 20px;            /* Отступы внутри */
+    border: 1px solid #ccc;   /* Тонкая рамка */
+    width: 300px;             /* Ширина блока */
+    margin: 0 auto;           /* Центрирование */
 }
-
