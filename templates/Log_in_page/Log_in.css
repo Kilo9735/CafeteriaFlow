@@ -9,8 +9,10 @@ body
     margin: 0; /*отступ всего относительно границ страницы*/
     height: 100vh;/* тип body занимает 100% экрана*/
     display: flex;/*флекс +вайб*/
-    justify-content: center;/* где будет стоять по OX*/
-    align-items: center;/*где будут стоять элементы по OY*/
+    justify-content: flex-start;/* где будет стоять по OX*/
+    align-items: center;/*где будут стоять элементы по OY */
+    padding-top: 150px;/* расстояние от верха*/
+    box-sizing: border-box;/*чтобы padding не создавал скролл*/
     flex-direction: column;/* все элементы в body будут стоять колонной*/
 }
 .log_in_block
