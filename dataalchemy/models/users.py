@@ -9,7 +9,6 @@ class User(Base):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     email = sqlalchemy.Column(sqlalchemy.String, unique=True)
     password = sqlalchemy.Column(sqlalchemy.String)
-
     balance = sqlalchemy.Column(sqlalchemy.Float, default=0.0)
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer,

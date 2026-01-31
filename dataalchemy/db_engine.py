@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # путь к файлу
-db_dir = os.path.join(BASE_DIR, '..',
-                      'database')  # database относительно dataalchemy
-db_path = os.path.join(db_dir, 'school.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_DIR = os.path.join(BASE_DIR, '..', 'database')
+DB_PATH = os.path.join(DB_DIR, 'school.db')
 
-if not os.path.exists(db_dir):
-    os.mkdir(db_dir)
+if not os.path.exists(DB_DIR):
+    os.mkdir(DB_DIR)
 
-engine = create_engine(f'sqlite:///{db_path}')
+# движок для SQLite
+engine = create_engine(f'sqlite:///{DB_PATH}?check_same_thread=False')
