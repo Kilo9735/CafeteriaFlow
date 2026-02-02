@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='registration.css') }}">
-        <title>CafeteriaFlow</title>
-    </head>
-    <body>
-        <h1 class="registr_h1">
-            Регистрация
-        </h1>
-        <div class="registr_block"> <!-- Эт для кубика -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='registration.css') }}">
+    <title>CafeteriaFlow — Регистрация</title>
+</head>
+<body>
+    <h1 class="registr_h1">Регистрация</h1>
+
+    <div class="registr_block">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
             <div class="input_box">
-                <label for="email">Введите почту</label>
-                <input type="email" id="user_mail" name="user_mail" placeholder="your_mail@mail.ru" required>
+                {{ form.email.label }}
+                {{ form.email(class_="input_field") }}
             </div>
+
             <div class="input_box">
-                <label for="password">Введите пароль</label>
-                <input type="password" id="users_password" name="users_password" placeholder="*********" required>
+                {{ form.password.label }}
+                {{ form.password(class_="input_field") }}
             </div>
+
             <div class="input_box">
-                <label for="password">Введите ФИО</label>
-                <input type="text" id="users_name" name="users_name" placeholder="Иванов Иван Иванович" required>
+                {{ form.name.label }}
+                {{ form.name(class_="input_field") }}
             </div>
-                <!-- Красивый выбор класса -->
-                <!-- Красивый выбор роли родитель/ребенок -->
-                <button type="submit">Зарегестрироваться</button>
-                <p>Место для регистрации через партнеров</p>
-        </div>
-    </body>
+
+            {{ form.submit(class_="submit_button") }}
+
+            <p>Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a></p>
+        </form>
+    </div>
+</body>
 </html>

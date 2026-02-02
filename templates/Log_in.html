@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='Log_in.css') }}">
-        <title>CafeteriaFlow</title>
-    </head>
-    <body>
-        <h1 class="Log_in_h1">
-            Вход
-        </h1>
-        <div class="log_in_block">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Log_in.css') }}">
+    <title>CafeteriaFlow — Вход</title>
+</head>
+<body>
+    <h1 class="Log_in_h1">Вход</h1>
+
+    <div class="log_in_block">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
             <div class="input_box">
-                <label for="email">Введите почту</label>
-                <input type="email" id="user_mail" name="user_mail" placeholder="your_mail@mail.ru" required>
+                {{ form.email.label }}
+                {{ form.email(class_="input_field") }}
             </div>
+
             <div class="input_box">
-                <label for="password">Введите пароль</label>
-                <input type="password" id="users_password" name="users_password" placeholder="*********" required>
+                {{ form.password.label }}
+                {{ form.password(class_="input_field") }}
             </div>
-            <button type="submit">Войти</button>
-            <p>Место для входа через партнеров</p>
-        </div>
-    </body>
+
+            {{ form.submit(class_="submit_button") }}
+
+            <p>Нет аккаунта? <a href="{{ url_for('register') }}">Регистрация</a></p>
+        </form>
+    </div>
+</body>
 </html>
