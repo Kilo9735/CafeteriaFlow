@@ -4,6 +4,7 @@ from dataalchemy.db_session import create_session, global_init
 from dataalchemy.models import User, Role
 from forms.register import RegisterForm
 from forms.login import LoginForm
+from forms.first_page import First_page 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
@@ -35,7 +36,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             session.close()
-            return redirect(url_for('profile'))
+            return redirect(url_for('first_page'))
 
         session.close()
         return "Неверный логин или пароль"
@@ -43,10 +44,11 @@ def login():
     return render_template('log_in.html', form=form)
 
 
-@app.route('/profile')
+@app.route('/first_page', methods=['GET', 'POST']) # Изменил 02.02.2026
 @login_required
-def profile():
-    return "Вы вошли 🎉"
+def first_page():
+    form = First_page()
+    return render_template('first_page.html', form=form)
 
 
 @app.route('/logout')

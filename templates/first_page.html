@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='first_page.css') }}">
+    <title>CafeteriaFlow — Вход</title>
+</head>
+<body>
+    {{ form.hidden_tag() }}
+    <form class="header">
+        {{ form.hidden_tag() }}
+        {{ form.basket(class_="button_") }}
+        {{ form.profile(class_="button_") }}
+        <img src="{{ url_for('static', filename='static/images/logo.png') }}" class="my-logo-class" alt="Логотип">
+        {{ form.top_up_acc(class_="button_") }}
+        {{ form.reviews(class_="button_") }}
+    </form>
+</body>
+</html>
