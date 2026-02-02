@@ -1,7 +1,6 @@
 from sqlalchemy.orm import sessionmaker, Session
 from dataalchemy.db_engine import engine
 from dataalchemy.models.base import Base
-from dataalchemy.models import Role, User
 
 __factory = None  # фабрика сессий для многопоточности
 

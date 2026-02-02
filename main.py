@@ -1,9 +1,11 @@
 from flask import Flask
-from dataalchemy.db_session import create_session
+from dataalchemy.db_session import create_session, global_init
 from dataalchemy.models import User, Role
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
+
+global_init()
 
 @app.route("/test_db")
 def test_db():

@@ -1,4 +1,4 @@
-from dataalchemy import session
+from dataalchemy.db_session import create_session, global_init
 from dataalchemy.models import Role, User
 from dataalchemy.models.base import Base
 from dataalchemy.db_engine import engine
@@ -7,6 +7,8 @@ from dataalchemy.db_engine import engine
 Base.metadata.create_all(engine)
 
 # Проверяем, есть ли роли, чтобы не дублировать
+global_init()
+session = create_session()
 if session.query(Role).count() == 0:
     roles = [Role(name="Student"), Role(name="Cook"), Role(name="Admin")]
     session.add_all(roles)
