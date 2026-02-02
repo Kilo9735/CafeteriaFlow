@@ -9,3 +9,5 @@ class First_page(FlaskForm):
     profile = SubmitField('Профиль')
     top_up_acc = SubmitField('Пополнить')
     reviews = SubmitField('Отзывы')
+    lunch = SubmitField('Обед')
+    breakfast = SubmitField('Завтрак')

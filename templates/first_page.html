@@ -8,13 +8,31 @@
 </head>
 <body>
     {{ form.hidden_tag() }}
-    <form class="header">
+    <div class="header">
+        <form class="contnet_header" method="post">
         {{ form.hidden_tag() }}
-        {{ form.basket(class_="button_") }}
-        {{ form.profile(class_="button_") }}
-        <img src="{{ url_for('static', filename='static/images/logo.png') }}" class="my-logo-class" alt="Логотип">
-        {{ form.top_up_acc(class_="button_") }}
         {{ form.reviews(class_="button_") }}
-    </form>
+        {{ form.basket(class_="button_") }}
+        <img src="{{ url_for('static', filename='images/logo.png') }}" class="my_logo_class" alt="Логотип">
+        {{ form.top_up_acc(class_="button_") }}
+        {{ form.profile(class_="button_") }}
+        </form>
+    </div>
+    <!-- <form class="button_meals">
+        {{ form.lunch(class_="button_in_meals") }} Просто ахуенные кнопочки для движения по странице
+        {{ form.breakfast(class_="button_in_meals") }}
+    </form> -->
+    <h1>
+        Завтрак
+    </h1>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim beatae iure iste ipsum et, quidem ipsa hic dolorem reiciendis vero quos tempora voluptates, laudantium commodi? Officia delectus laborum nam voluptates?
+    </p>
+    <h1>
+        Обед
+    </h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae obcaecati amet sequi sed a recusandae odio quo aliquid fugiat? Est velit perspiciatis commodi pariatur! Voluptatum error hic dolores sunt ex!
+    </p>
 </body>
 </html>
