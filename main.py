@@ -1,10 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, login_user, logout_user, login_required
 from dataalchemy.db_session import create_session, global_init
-from dataalchemy.models import User, Role
+from dataalchemy.models import User, Role, Dish, Food, DishFood, LunchDish, \
+    BreakfastDish
 from forms.register import RegisterForm
 from forms.login import LoginForm
-from forms.first_page import First_page 
+from forms.first_page import First_page
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
@@ -44,10 +45,17 @@ def login():
     return render_template('log_in.html', form=form)
 
 
-@app.route('/first_page', methods=['GET', 'POST']) # Изменил 02.02.2026
+@app.route('/first_page', methods=['GET', 'POST'])  # Изменил 02.02.2026
 @login_required
 def first_page():
     form = First_page()
+    dishes = ['гавно'] # ЭТО ПРОВЕРКА
+    session = create_session()
+    for el in dishes:
+        dish = LunchDish(name=el)
+        session.add(dish)
+    session.commit()
+    session.close()
     return render_template('first_page.html', form=form)
 
 
