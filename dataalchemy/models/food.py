@@ -14,6 +14,6 @@ class Food(Base):
 
     dishes = relationship(
         'Dish',
-        secondary='dish_ingredients',
+        secondary='dish_foods',
         back_populates='foods'
     )
