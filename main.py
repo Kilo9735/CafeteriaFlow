@@ -51,12 +51,15 @@ def login():
 @login_required
 def first_page():
     form = First_page()
+    session = create_session()
+    dishes = session.query(Dish).all()
+    session.close()
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
         elif form.reviews.data:
             return redirect(url_for('reviews'))
-    return render_template('first_page.html', form=form)
+    return render_template('first_page.html', form=form, dishes=dishes)
 
 
 @app.route('/logout')
@@ -93,6 +96,7 @@ def register():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
+
 def profile():
     form = Profile()
     if form.validate_on_submit():
