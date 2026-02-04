@@ -63,16 +63,17 @@ body
 }
 .photo_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Автоподстройка под размер карточки */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Автоподстройка под размер карточки */
   gap: 20px; /* Расстояние между карточками */
   padding: 20px;
   max-width: 1200px; /* Ограничение ширины */
-  margin: 0 auto; /* Центрирование */
+  display: flex; /* Все карточки в ряд */
+  flex-direction: row;  /* Все карточки в ряд */
 }
 .meal_card 
 {
     height: 100px;
-    width: 50px;
+    width: 50%;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
