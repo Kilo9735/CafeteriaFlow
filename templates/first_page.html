@@ -18,10 +18,6 @@
         {{ form.profile(class_="button_") }}
         </form>
     </div>
-    <!-- <form class="button_meals">
-        {{ form.lunch(class_="button_in_meals") }} Просто ахуенные кнопочки для движения по странице
-        {{ form.breakfast(class_="button_in_meals") }}
-    </form> -->
     <h1>
         Завтрак
     </h1>
@@ -31,7 +27,7 @@
         <div class="meal_card">
         <h3>{{ dish.name }}</h3>
         <p>{{ dish.price }} руб.</p>
-        <p>Тип: {{ dish.type }}</p>
+        {{ form.add(class_='+') }}
         </div>
         {% endfor %}
     </div>

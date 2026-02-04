@@ -49,13 +49,6 @@ def login():
 @login_required
 def first_page():
     form = First_page()
-    dishes = ['гавно'] # ЭТО ПРОВЕРКА
-    session = create_session()
-    for el in dishes:
-        dish = LunchDish(name=el)
-        session.add(dish)
-    session.commit()
-    session.close()
     return render_template('first_page.html', form=form)
 
 
