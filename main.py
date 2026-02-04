@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, url_for
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, \
+    current_user
 from dataalchemy import create_session, global_init
 from dataalchemy import User, Dish, Food, DishFood, LunchDish, \
-    BreakfastDish, RoleStudent, RoleAdmin, RoleCook
+    BreakfastDish, RoleAdmin, RoleCook, Review
 from forms.register import RegisterForm
 from forms.login import LoginForm
 from forms.first_page import First_page
@@ -80,7 +81,7 @@ def register():
             session.close()
             return "Пользователь уже существует"
 
-        user = RoleStudent(
+        user = User(
             name=form.name.data,
             email=form.email.data
         )
@@ -97,7 +98,6 @@ def register():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-
 def profile():
     form = Profile()
     if form.validate_on_submit():
@@ -109,15 +109,21 @@ def profile():
             return redirect(url_for('reviews'))
     return render_template('profile.html', form=form)
 
+
 @app.route('/reviews', methods=['GET', 'POST'])
 def reviews():
     form = Reviews()
+    session = create_session()
+    reviews = session.query(Review).all()
+    session.close()
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
         elif form.menu.data:
             return redirect(url_for('first_page'))
-    return render_template('reviews.html', form=form)
+        elif form.button_add_reviews.data:
+            return redirect(url_for('reviews'))
+    return render_template('reviews.html', form=form, reviews=reviews)
 
 @app.route('/bascket', methods=['GET', 'POST'])
 def bascket():

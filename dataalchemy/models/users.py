@@ -16,6 +16,8 @@ class User(Base, UserMixin):
 
     role_id = sqlalchemy.Column(sqlalchemy.Integer)
 
+    reviews = relationship('Review', back_populates='user')
+
     __mapper_args__ = {
         'polymorphic_on': role_id,
         'polymorphic_identity': 'student',
@@ -36,11 +38,6 @@ class RoleAdmin(User):
         'polymorphic_identity': 'admin',
     }
 
-
-class RoleStudent(User):
-    __mapper_args__ = {
-        'polymorphic_identity': 'student',
-    }
 
 class RoleCook(User):
     __mapper_args__ = {
