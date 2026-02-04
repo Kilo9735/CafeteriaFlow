@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, login_user, logout_user, login_required
 from dataalchemy.db_session import create_session, global_init
-from dataalchemy.models import User, Role, Dish, Food, DishFood, LunchDish, \
-    BreakfastDish
+from dataalchemy.models import User, Role, Dish, Food, DishFood, LunchDish, BreakfastDish
+from dataalchemy.models.base import Base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from forms.register import RegisterForm
 from forms.login import LoginForm
 from forms.first_page import First_page
