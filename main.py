@@ -10,7 +10,6 @@ from forms.first_page import First_page
 from forms.profile import Profile
 from forms.reviews import Reviews
 from forms.Bascket import Bascket
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
 
@@ -61,6 +60,8 @@ def first_page():
             return redirect(url_for('profile'))
         elif form.reviews.data:
             return redirect(url_for('reviews'))
+        elif form.basket.data:
+            return redirect(url_for('bascket'))
     return render_template('first_page.html', form=form, dishes=dishes)
 
 
@@ -107,6 +108,8 @@ def profile():
             return redirect(url_for('first_page'))
         elif form.reviews.data:
             return redirect(url_for('reviews'))
+        elif form.basket.data:
+            return redirect(url_for('bascket'))
     return render_template('profile.html', form=form)
 
 
@@ -123,6 +126,8 @@ def reviews():
             return redirect(url_for('first_page'))
         elif form.button_add_reviews.data:
             return redirect(url_for('reviews'))
+        elif form.basket.data:
+            return redirect(url_for('bascket'))
     return render_template('reviews.html', form=form, reviews=reviews)
 
 @app.route('/bascket', methods=['GET', 'POST'])
