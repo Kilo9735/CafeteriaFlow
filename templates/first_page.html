@@ -25,9 +25,9 @@
         {{ form.hidden_tag() }}
         {% for dish in dishes %}
         <div class="meal_card">
-        <h3>{{ dish.name }}</h3>
-        <p>{{ dish.price }} руб.</p>
-        {{ form.add(class_='+') }}
+            <h3>{{ dish.name }}</h3>
+            <p>{{ dish.price }} руб.</p>
+            {{ form.add(class_='add_button') }}
         </div>
         {% endfor %}
     </div>

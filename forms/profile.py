@@ -16,6 +16,3 @@ class Profile(FlaskForm):
     top_up_acc = SubmitField('Пополнить')
     reviews = SubmitField('Отзывы')
     add = SubmitField('+')
-
-
-app = Flask(__name__)

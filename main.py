@@ -50,21 +50,22 @@ def login():
 @login_required
 def first_page():
     form = First_page()
+    session = create_session()
+    dishes = session.query(Dish).all()
+    session.close()
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
-    return render_template('first_page.html', form=form)
+    return render_template('first_page.html', form=form, dishes=dishes)
 
 
 @app.route('/logout')
-@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
-@login_required
 def register():
     form = RegisterForm()
 
@@ -92,7 +93,6 @@ def register():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-@login_required
 def profile():
     form = Profile()
     if form.validate_on_submit():
@@ -101,8 +101,6 @@ def profile():
         elif form.menu.data:
             return redirect(url_for('first_page'))
     return render_template('profile.html', form=form)
-
-
 
 
 if __name__ == "__main__":
