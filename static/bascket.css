@@ -46,3 +46,48 @@ body
     flex-shrink: 0;
     align-self: center;
 }
+.bascket_element
+{
+    border-radius: 20px;/* Скругление */
+    background-color: #c9ada7;/* Цвет фона */
+    padding: 20px;/* Отступы внутри */
+    border: 1px solid #9a8c98;   /* Тонкая рамка */
+    width: 450px;/* Ширина блока */
+    height: 100px;/*Высота блока */
+    gap: 40px; /*расстояние между элементами внутри бокса */
+    flex-direction: column; /* как буду располагаться элементы */
+    align-items: center;
+    position: absolute;
+    font-size: 30px;
+    display: flex;/*флекс +вайб и все этом духе*/
+    top: 205px;
+    left: 100px;
+}
+.bascket_summ
+{
+    border-radius: 20px;/* Скругление */
+    background-color: #c9ada7;/* Цвет фона */
+    padding: 20px;/* Отступы внутри */
+    border: 1px solid #9a8c98;   /* Тонкая рамка */
+    width: 300px;/* Ширина блока */
+    height: 70px;/*Высота блока */
+    gap: 40px; /*расстояние между элементами внутри бокса */
+    flex-direction: column; /* как буду располагаться элементы */
+    align-items: center;
+    position: absolute;
+    font-size: 30px;
+    display: flex;/*флекс +вайб и все этом духе*/
+    top: 205px;
+    right: 100px;
+}
+.accept_bascket
+{
+    padding: 0 20px;
+    height: 40px;
+    width: 150px;
+    flex-shrink: 0;
+    align-self: center;
+    position: absolute;
+    top: 350px;
+    right: 200px;
+}
