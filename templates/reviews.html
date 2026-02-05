@@ -17,22 +17,11 @@
         {{ form.top_up_acc(class_="button_") }}
         {{ form.profile(class_="button_") }}
         </form>
-        <div class="reviews_name_date">
-        {% for rew in reviews %}
-            <h3>{{ rew.user.name }}</h3>
-            <p>{{ rew.info }}</p>
-        {% endfor %}
-        </div>
-    <form class="contnet_header" method="post">
-        {{ form.hidden_tag() }}
-        {{ form.button_add_reviews(class_="button_add_reviews") }}
-    </form>
-    <div class="reviews_coment">
-        <a>
-            xcvbnm,.
-        </a>
     </div>
-    </div>
+    {% for rew in reviews %}
+        <h3 class="name_box_review">{{ rew.user.name }}</h3>
+        <p class="reviews_coment">{{ rew.info }}</p>
+    {% endfor %}
 </body>
 </html>
 </html>

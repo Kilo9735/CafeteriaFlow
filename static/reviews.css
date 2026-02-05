@@ -43,71 +43,12 @@ body
     flex-shrink: 0;
     align-self: center;
 }
-.button_meals
-{
-    margin: 10px;
-    display: flex;/*флекс +вайб и все этом духе*/
-    flex-direction: row ; /* как буду располагаться элементы */
-    gap: 20px; /*расстояние между элементами внутри бокса */
-}
-.button_in_meals
-{
-    height: 30px;
-    width: 100px;
-    align-self: center;
-}
 .my_logo_class
 {
     width: 150px;
     height: 150px;
 }
-.balance_profile
-{
-    border-radius: 20px;/* Скругление */
-    background-color: #c9ada7;/* Цвет фона */
-    padding: 20px;/* Отступы внутри */
-    border: 1px solid #9a8c98;   /* Тонкая рамка */
-    width: 380px;/* Ширина блока */
-    height: 300px;/*Высота блока */
-    gap: 40px; /*расстояние между элементами внутри бокса */
-    flex-direction: column; /* как буду располагаться элементы */
-    align-items: center;
-    position: absolute;
-    font-size: 30px;
-    display: flex;/*флекс +вайб и все этом духе*/
-    top: 270px;
-    left: 150px;
-
-}
-.check_profile
-{
-    border-radius: 20px;/* Скругление */
-    background-color: #c9ada7;/* Цвет фона */
-    padding: 20px;/* Отступы внутри */
-    border: 1px solid #9a8c98;   /* Тонкая рамка */
-    width: 380px;/* Ширина блока */
-    height: 450px;/*Высота блока */
-    gap: 40px; /*расстояние между элементами внутри бокса */
-    flex-direction: column; /* как буду располагаться элементы */
-    align-items: center;
-    font-size: 30px;
-    display: flex;/*флекс +вайб и все этом духе*/
-    position:   absolute;
-    top: 205px;
-    right: -20px;
-}
-.button_balance
-{
-    padding: 0 20px;
-    height: 40px;
-    width: 150px;
-    flex-shrink: 0;
-    align-self: center;
-    position: absolute;
-    bottom: 10px;
-    width: 67%;
-}
-.reviews_name_date
+.name_box_review
 {
     border-radius: 20px;/* Скругление */
     background-color: #c9ada7;/* Цвет фона */
@@ -124,7 +65,6 @@ body
     top: 225px;
     left: 50px;
 }
-
 .reviews_coment
 {
     border-radius: 20px;/* Скругление */
