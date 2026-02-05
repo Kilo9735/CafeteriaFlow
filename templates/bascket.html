@@ -16,7 +16,18 @@
         <img src="{{ url_for('static', filename='images/logo.png') }}" class="my_logo_class" alt="Логотип">
         {{ form.top_up_acc(class_="button_") }}
         {{ form.profile(class_="button_") }}
+        </form>
     </div>
+    <div class="bascket_element">
+
+    </div>
+    <div class="bascket_summ">
+        Итог:
+    </div>
+    <form>
+        {{ form.hidden_tag() }}
+        {{ form.accept_bascket(class_="accept_bascket") }}
+    </form>
 </body>
 </html>
 </html>

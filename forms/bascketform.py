@@ -17,3 +17,4 @@ class BascketForm(FlaskForm):
     reviews = SubmitField('Отзывы')
     add = SubmitField('+')
     remove = SubmitField('-')
+    accept_bascket = SubmitField('Офрмить заказ')
