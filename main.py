@@ -150,15 +150,16 @@ def bascket():
             return redirect(url_for('first_page'))
         elif form.reviews.data:
             return redirect(url_for('reviews'))
-    return render_template('Bascket.html', form=form)
+    return render_template('bascket.html', form=form)
 
 
 if __name__ == "__main__":
     session = create_session()
     try:
-        a = session.query(Dish)
+        a = session.query(Dish).all()
+        names = [x.name for x in a]
         for dish in default_menu:
-            if dish not in a:
+            if dish.name not in names:
                 session.add(dish)
         session.commit()
     except Exception as e:
