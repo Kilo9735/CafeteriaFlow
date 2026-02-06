@@ -178,7 +178,7 @@ def new_reviews():
 
 
 @app.route('/bascket', methods=['GET', 'POST'])
-def bascket():
+def bascket():#test
     form = BascketForm()
     session = create_session()
     object = session.query(Bascket).filter(Bascket.user_id == current_user.id).all()
