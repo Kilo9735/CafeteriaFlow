@@ -186,7 +186,23 @@ def bascket():
     lunch = session.query(Dish).filter(Dish.type == 'lunch' and Bascket.user_id == current_user.id).all()
     dishes = session.query(Dish).filter(Dish.type == 'dish' and Bascket.user_id == current_user.id).all()
     bascket_sum = sum(elem.dish.price for elem in object)
-    print(bascket_sum)
+    if request.method == 'POST':
+        dish_id = request.form.get('dish_id')
+        if dish_id:
+            # 1. ИЩЕМ существующую запись в базе
+            # Находим ПЕРВУЮ попавшуюся запись с таким блюдом у этого юзера
+            item_to_delete = session.query(Bascket).filter(
+                Bascket.user_id == current_user.id,
+                Bascket.dish_id == int(dish_id)
+            ).first()
+
+            # 2. Если нашли — удаляем
+            if item_to_delete:
+                session.delete(item_to_delete)
+                session.commit()
+            else:
+                print("Такого товара нет в корзине") # Для отладки
+        redirect(url_for('bascket'))
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
