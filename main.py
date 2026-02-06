@@ -180,6 +180,12 @@ def new_reviews():
 @app.route('/bascket', methods=['GET', 'POST'])
 def bascket():
     form = BascketForm()
+    session = create_session()
+    object = session.query(Bascket).filter(Bascket.user_id == current_user.id).all()
+    breakfast = session.query(Dish).filter(Dish.type == 'breakfast' and Bascket.user_id == current_user.id).all()
+    lunch = session.query(Dish).filter(Dish.type == 'lunch' and Bascket.user_id == current_user.id).all()
+    dishes = session.query(Dish).filter(Dish.type == 'dish' and Bascket.user_id == current_user.id).all()
+
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
@@ -189,7 +195,7 @@ def bascket():
             return redirect(url_for('reviews'))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc'))
-    return render_template('bascket.html', form=form)
+    return render_template('bascket.html', form=form, object=object, dishes=dishes, breakfast=breakfast, lunch=lunch)
 
 
 @app.route('/top_up_acc', methods=['GET', 'POST'])
