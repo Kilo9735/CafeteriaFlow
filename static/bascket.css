@@ -28,7 +28,7 @@ body
     box-sizing: border-box;
     /* Твои отступы (они сожмут контент внутрь) */
     padding: 0 50px; /* Сверху 0, по бокам 50px */
-        display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -70,8 +70,8 @@ body
     padding: 20px;/* Отступы внутри */
     border: 1px solid #9a8c98;   /* Тонкая рамка */
     width: 300px;/* Ширина блока */
-    height: 70px;/*Высота блока */
-    gap: 40px; /*расстояние между элементами внутри бокса */
+    height: 120px;/*Высота блока */
+    gap: 0;
     flex-direction: column; /* как буду располагаться элементы */
     align-items: center;
     position: absolute;
@@ -88,6 +88,6 @@ body
     flex-shrink: 0;
     align-self: center;
     position: absolute;
-    top: 350px;
+    top: 380px;
     right: 200px;
 }
