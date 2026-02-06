@@ -71,7 +71,7 @@ def first_page():
             session.commit()
     rendered = render_template('first_page.html', form=form, dishes=dishes,
                                breakfast=breakfast, lunch=lunch)
-    session.close()
+    session.close() # Проверка
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
