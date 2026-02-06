@@ -177,6 +177,7 @@ def new_reviews():
     return render_template('new_reviews.html', form=form)
 
 
+#test
 @app.route('/bascket', methods=['GET', 'POST'])
 def bascket():
     form = BascketForm()
