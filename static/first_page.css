@@ -64,7 +64,8 @@ h1 {
 }
 
 /* ===== КАРТОЧКА ===== */
-.meal_card {
+.meal_card
+ {
     position: relative;
 
     display: flex;
