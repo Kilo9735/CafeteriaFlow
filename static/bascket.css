@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 /* При заходе на сайт автоматом скачается шрифт */
-body, input, button, textarea, select {
+body, input, button, textarea, select, h1, h4 {
     font-family: 'Nunito', sans-serif; /* ВЕЗДЕ будет Nunito */
     color: #22223b; /*темно-синий цвет текста везде*/
 }
@@ -71,8 +71,7 @@ body
     padding: 20px;/* Отступы внутри */
     border: 1px solid #9a8c98;   /* Тонкая рамка */
     width: 300px;/* Ширина блока */
-    height: 120px;/*Высота блока */
-    gap: 0;
+    height: 100px;/*Высота блока */
     flex-direction: column; /* как буду располагаться элементы */
     align-items: center;
     position: absolute;
@@ -80,6 +79,11 @@ body
     display: flex;/*флекс +вайб и все этом духе*/
     top: 205px;
     right: 100px;
+}
+h4
+{
+    margin: 0;
+    padding-top: 0;
 }
 .accept_bascket
 {
@@ -114,6 +118,7 @@ body
 
     padding: 10px;
     min-height: 250px ;
+    max-width: 300px;
     border-radius: 8px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
@@ -175,4 +180,8 @@ body
 .button_in_meals:hover
 {
    background-color: #3a3e59;
+}
+h1
+{
+    padding-left: 20%;
 }

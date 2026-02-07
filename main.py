@@ -14,6 +14,7 @@ from forms.bascketform import BascketForm
 from forms.alergen_add import Alergen_add
 from forms.new_reviews import New_reviews
 from forms.top_up_acc import Top_up_acc
+from sqlalchemy import desc 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
@@ -144,7 +145,7 @@ def profile():
 def reviews():
     form = Reviews()
     session = create_session()
-    reviews = session.query(Review).all()
+    reviews = session.query(Review).order_by(Review.created_date.desc()).all()
     session.close()
     if form.validate_on_submit():
         if form.profile.data:
@@ -168,24 +169,37 @@ def new_reviews():
             return redirect(url_for('profile'))
         elif form.menu.data:
             return redirect(url_for('first_page'))
-        elif form.button_add_reviews.data:
-            return redirect(url_for('reviews'))
         elif form.basket.data:
             return redirect(url_for('bascket'))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc'))
+        elif form.button_add_reviews.data:
+            session = create_session()
+            
+            new_review = Review(
+                info=form.info.data,  # То, что ввели в поле
+                id_user=current_user.id  # Кто написал
+            )
+            
+            session.add(new_review)
+            session.commit()
+            session.close()
+            print('ВСЕ РАБОТАЕТ!!!!!!!!!!!!!!!!!!!!')
+            return redirect(url_for('reviews'))
+    else:
+        print("НЕ работает!!!!!!!!!!!!!!!")
     return render_template('new_reviews.html', form=form)
 
 
 @app.route('/bascket', methods=['GET', 'POST'])
-def bascket():#test
+def bascket():
     form = BascketForm()
     session = create_session()
     object = session.query(Bascket).filter(Bascket.user_id == current_user.id).all()
     breakfast = session.query(Dish).filter(Dish.type == 'breakfast' and Bascket.user_id == current_user.id).all()
     lunch = session.query(Dish).filter(Dish.type == 'lunch' and Bascket.user_id == current_user.id).all()
     dishes = session.query(Dish).filter(Dish.type == 'dish' and Bascket.user_id == current_user.id).all()
-
+    bascket_sum = sum(elem.dish.price for elem in object)
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
@@ -195,7 +209,24 @@ def bascket():#test
             return redirect(url_for('reviews'))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc'))
-    return render_template('bascket.html', form=form, object=object, dishes=dishes, breakfast=breakfast, lunch=lunch)
+    if request.method == 'POST':
+        dish_id = request.form.get('dish_id')
+        if dish_id:
+            # 1. ИЩЕМ существующую запись в базе
+            # Находим ПЕРВУЮ попавшуюся запись с таким блюдом у этого юзера
+            item_to_delete = session.query(Bascket).filter(
+                Bascket.user_id == current_user.id,
+                Bascket.dish_id == int(dish_id)
+            ).first()
+
+            # 2. Если нашли — удаляем
+            if item_to_delete:
+                session.delete(item_to_delete)
+                session.commit()
+            else:
+                print("Такого товара нет в корзине") # Для отладки
+        return redirect(url_for('bascket'))
+    return render_template('bascket.html', form=form, object=object, dishes=dishes, breakfast=breakfast, lunch=lunch, bascket_sum=bascket_sum)
 
 
 @app.route('/top_up_acc', methods=['GET', 'POST'])
