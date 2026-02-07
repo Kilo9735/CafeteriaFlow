@@ -7,22 +7,24 @@
     <title>CafeteriaFlow — Вход</title>
 </head>
 <body>
+    <form method="post">
     {{ form.hidden_tag() }}
     <div class="header">
-        <form class="contnet_header" method="post">
+        <div class="contnet_header">
         {{ form.hidden_tag() }}
         {{ form.reviews(class_="button_") }}
         {{ form.basket(class_="button_") }}
         <img src="{{ url_for('static', filename='images/logo.png') }}" class="my_logo_class" alt="Логотип">
         {{ form.menu(class_="button_") }}
         {{ form.profile(class_="button_") }}
-        </form>
+        </div>
     </div>
     <div class="input_box">
         <label>Введите сумму</label>
         {{ form.top_up(class_="input_inside") }}
-        {{ form.top_up_acc(class_='button_') }}
+        {{ form.top_up_acc_balance(class_='button_') }}
     </div>
+    </form>
 </body>
 </html>
 </html>

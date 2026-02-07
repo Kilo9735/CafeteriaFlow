@@ -232,7 +232,7 @@ def bascket():
 @app.route('/top_up_acc', methods=['GET', 'POST'])
 def top_up_acc():
     form = Top_up_acc()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         if form.profile.data:
             return redirect(url_for('profile'))
         elif form.menu.data:
@@ -241,6 +241,22 @@ def top_up_acc():
             return redirect(url_for('reviews'))
         elif form.basket.data:
             return redirect(url_for('bascket'))
+    if form.validate_on_submit():
+        if form.top_up_acc_balance.data:
+            print('Кнопка нажата!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+            session = create_session()
+            user = session.query(User).filter(User.id == current_user.id).first()
+            if user:
+                money_to_add = int(form.top_up.data)
+                current_balance = user.balance if user.balance else 0
+                user.balance = current_balance + money_to_add
+                session.commit()
+                print(f'Баланс пополнен на {money_to_add}! Теперь: {user.balance}')
+                print('ВСЕ РАБОТАЕТ!!!!!!!!!!!!!!!!!!!!')
+                session.close()
+            return redirect(url_for('top_up_acc'))
+    else:
+        print("НЕ работает!!!!!!!!!!!!!!!")
     return render_template('top_up_acc.html', form=form)
 
 

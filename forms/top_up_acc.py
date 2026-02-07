@@ -7,6 +7,7 @@ class Top_up_acc(FlaskForm):
     basket = SubmitField('Корзина')
     profile = SubmitField('Профиль')
     top_up_acc = SubmitField('Пополнить')
+    top_up_acc_balance = SubmitField('Пополнить')
     reviews = SubmitField('Отзывы')
     top_up = IntegerField('Cумма пополнения')
     button_add_reviews = SubmitField('Добавить отзыв')
