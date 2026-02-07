@@ -14,6 +14,7 @@ from forms.bascketform import BascketForm
 from forms.alergen_add import Alergen_add
 from forms.new_reviews import New_reviews
 from forms.top_up_acc import Top_up_acc
+from sqlalchemy import desc 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
@@ -144,7 +145,7 @@ def profile():
 def reviews():
     form = Reviews()
     session = create_session()
-    reviews = session.query(Review).all()
+    reviews = session.query(Review).order_by(Review.created_date.desc()).all()
     session.close()
     if form.validate_on_submit():
         if form.profile.data:
@@ -168,12 +169,25 @@ def new_reviews():
             return redirect(url_for('profile'))
         elif form.menu.data:
             return redirect(url_for('first_page'))
-        elif form.button_add_reviews.data:
-            return redirect(url_for('reviews'))
         elif form.basket.data:
             return redirect(url_for('bascket'))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc'))
+        elif form.button_add_reviews.data:
+            session = create_session()
+            
+            new_review = Review(
+                info=form.info.data,  # То, что ввели в поле
+                id_user=current_user.id  # Кто написал
+            )
+            
+            session.add(new_review)
+            session.commit()
+            session.close()
+            print('ВСЕ РАБОТАЕТ!!!!!!!!!!!!!!!!!!!!')
+            return redirect(url_for('reviews'))
+    else:
+        print("НЕ работает!!!!!!!!!!!!!!!")
     return render_template('new_reviews.html', form=form)
 
 
