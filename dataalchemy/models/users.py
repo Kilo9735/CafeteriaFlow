@@ -21,6 +21,12 @@ class User(Base, UserMixin):
 
     history = relationship('History', back_populates='user')
 
+    allergens = relationship(
+        'Allergen',
+        secondary='user_allergens', # Ссылка по имени таблицы (строкой)
+        back_populates='sufferers'
+    )
+
     bascket = relationship(
         'Bascket',
         back_populates='user',

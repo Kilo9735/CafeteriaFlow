@@ -3,7 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, \
     current_user
 from dataalchemy import create_session, global_init
 from dataalchemy import User, Dish, Food, DishFood, LunchDish, \
-    BreakfastDish, RoleAdmin, RoleCook, Review, Bascket
+    BreakfastDish, RoleAdmin, RoleCook, Review, Bascket, Allergen
 from default_menu import default_menu
 from forms.register import RegisterForm
 from forms.login import LoginForm
@@ -63,10 +63,22 @@ def login():
 def first_page():
     form = First_page()
     session = create_session()
+    user = session.query(User).get(current_user.id)
     breakfast = session.query(Dish).filter(Dish.type == 'breakfast').all()
     lunch = session.query(Dish).filter(Dish.type == 'lunch').all()
     dishes = session.query(Dish).filter(Dish.type == 'dish').all()
+    forbidden_allergens = [a.name for a in user.allergens]
 
+    def is_safe(dish):
+        if not dish.allergen_name:
+            return True
+        if dish.allergen_name in forbidden_allergens:
+            return False
+        return True
+    
+    breakfast_access = [d for d in breakfast if is_safe(d)]
+    lunch_access = [d for d in lunch if is_safe(d)]
+    dishes_access = [d for d in dishes if is_safe(d)]
     if request.method == 'POST':
         dish_id = request.form.get('dish_id')
         if dish_id:
@@ -95,8 +107,8 @@ def first_page():
             return redirect(url_for('bascket', _anchor=anchor))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc', _anchor=anchor))
-    return render_template('first_page.html', form=form, dishes=dishes,
-                               breakfast=breakfast, lunch=lunch)
+    return render_template('first_page.html', form=form, dishes=dishes_access,
+                               breakfast=breakfast_access, lunch=lunch_access)
 
 
 @app.route('/logout')
@@ -138,7 +150,6 @@ def profile():
     session = create_session()
     user = session.query(User).filter(User.id == current_user.id).first()
     user_history = session.query(History).filter(History.id_user == current_user.id).order_by(History.created_date.desc()).all()
-    session.close()
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
@@ -152,6 +163,7 @@ def profile():
             return redirect(url_for('alergen_add'))
         elif form.top_up_acc.data:
             return redirect(url_for('top_up_acc'))
+    session.close()
     return render_template('profile.html', form=form, user=user, history=user_history)
 
 
@@ -301,7 +313,7 @@ def top_up_acc():
             if user.balance >= SUBSCRIPTION_PRICE:
                 user.balance -= SUBSCRIPTION_PRICE
                 
-                # Если уже был абонемент, продлеваем, если нет — ставим с сегодня
+                # Если уже был абонемент, продлеваем, если нет ставим с сегодня
                 now = datetime.datetime.now()
                 if user.subscription_until and user.subscription_until > now:
                     user.subscription_until += timedelta(days=30)
@@ -318,8 +330,12 @@ def top_up_acc():
 
 
 @app.route('/alergen_add', methods=['GET', 'POST'])
+@login_required
 def alergen_add():
     form = Alergen_add()
+    session = create_session()
+    all_allergens = session.query(Allergen).all()
+    user = session.query(User).get(current_user.id)
     if form.validate_on_submit():
         if form.profile.data:
             return redirect(url_for('profile'))
@@ -329,18 +345,34 @@ def alergen_add():
             return redirect(url_for('reviews'))
         elif form.basket.data:
             return redirect(url_for('bascket'))
-    return render_template('alergen_add.html', form=form)
+    if request.method == 'POST' and 'save_allergens' in request.form:
+        user.allergens = []
+        selected_ids = request.form.getlist('allergen_ids')
+        for a_id in selected_ids:
+            allergen = session.query(Allergen).get(int(a_id))
+            if allergen:
+                user.allergens.append(allergen)
+        session.commit()
+        flash('Список аллергенов обновлен!', 'success')
+        return redirect(url_for('alergen_add'))
+    return render_template('alergen_add.html', form=form, 
+                           all_allergens=all_allergens, user=user)
 
 
 if __name__ == "__main__":
     session = create_session()
     try:
+        allergen_names = ['lactose', 'eggs'] 
+        for name in allergen_names:
+            if not session.query(Allergen).filter(Allergen.name == name).first():
+                session.add(Allergen(name=name)) 
+        session.commit()
         a = session.query(Dish).all()
         names = [x.name for x in a]
         for dish in default_menu:
             if dish.name not in names:
-                session.add(dish)
-        session.commit()
+                session.add(dish)    
+        session.commit()   
     except Exception as e:
         print(f'Аларм!!! сайта не будет потому что {e}')
         session.rollback()
