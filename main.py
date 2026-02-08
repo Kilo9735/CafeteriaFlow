@@ -19,6 +19,7 @@ from flask import flash
 from dataalchemy.models.history import History
 import datetime
 from datetime import timedelta
+from forms.cook_dashboard import Cook
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'crewdestruct'
@@ -49,8 +50,16 @@ def login():
 
         if user and user.check_password(form.password.data):
             login_user(user)
+            role = user.role_id 
             session.close()
-            return redirect(url_for('first_page'))
+            if role == 3: # Админ
+                return redirect(url_for('admin_dashboard'))
+            elif role == 2: # Повар
+                return redirect(url_for('cook_dashboard'))
+            else: # Ученик
+                return redirect(url_for('first_page'))
+        session.close()
+        return redirect(url_for('first_page'))
 
         session.close()
         return "Неверный логин или пароль"
@@ -358,7 +367,34 @@ def alergen_add():
     return render_template('alergen_add.html', form=form, 
                            all_allergens=all_allergens, user=user)
 
-
+@app.route('/cook_dashboard', methods=['GET', 'POST'])
+@login_required
+def cook_dashboard():
+    form = Cook()
+    session = create_session()
+    history_dish = session.query(History).all()
+    user = session.query(User).get(current_user.id)
+    if form.validate_on_submit():
+        if form.profile.data:
+            return redirect(url_for('profile'))
+        elif form.menu.data:
+            return redirect(url_for('first_page'))
+        elif form.reviews.data:
+            return redirect(url_for('reviews'))
+        elif form.basket.data:
+            return redirect(url_for('bascket'))
+    if request.method == 'POST' and 'save_allergens' in request.form:
+        user.allergens = []
+        selected_ids = request.form.getlist('allergen_ids')
+        for a_id in selected_ids:
+            allergen = session.query(Allergen).get(int(a_id))
+            if allergen:
+                user.allergens.append(allergen)
+        session.commit()
+        flash('Список аллергенов обновлен!', 'success')
+        return redirect(url_for('alergen_add'))
+    return render_template('alergen_add.html', form=form, 
+                           all_allergens=all_allergens, user=user)
 if __name__ == "__main__":
     session = create_session()
     try:
@@ -372,7 +408,30 @@ if __name__ == "__main__":
         for dish in default_menu:
             if dish.name not in names:
                 session.add(dish)    
-        session.commit()   
+        admin_email = "sosok@school.ru"
+        if not session.query(User).filter(User.email == admin_email).first():
+            admin = RoleAdmin(
+                name="Админушка батюшка",
+                email=admin_email,
+                role_id=3
+            )
+            admin.set_password("admin_god")
+            session.add(admin)
+            session.commit()
+            print("Админ создан")
+        
+        # Проверка
+        cook_email = "cook@school.ru"
+        if not session.query(User).filter(User.email == cook_email).first():
+            cook = RoleCook(
+                name="Меган фокс",
+                email=cook_email,
+                role_id=2
+            )
+            cook.set_password("cook123")
+            session.add(cook)
+            print("Повар создан")  
+        session.commit()
     except Exception as e:
         print(f'Аларм!!! сайта не будет потому что {e}')
         session.rollback()

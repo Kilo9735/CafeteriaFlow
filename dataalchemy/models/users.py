@@ -35,7 +35,7 @@ class User(Base, UserMixin):
 
     __mapper_args__ = {
         'polymorphic_on': role_id,
-        'polymorphic_identity': 'student',
+        'polymorphic_identity': 1,
     }
 
     def __repr__(self):
@@ -55,11 +55,11 @@ class User(Base, UserMixin):
 
 class RoleAdmin(User):
     __mapper_args__ = {
-        'polymorphic_identity': 'admin',
+        'polymorphic_identity': 3,
     }
 
 
 class RoleCook(User):
     __mapper_args__ = {
-        'polymorphic_identity': 'cook',
+        'polymorphic_identity': 2,
     }
