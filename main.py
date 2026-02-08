@@ -319,11 +319,12 @@ def top_up_acc():
 
         if form.top_up_acc_balance.data:
             if user:
-                money_to_add = int(form.top_up.data)
-                current_balance = user.balance if user.balance else 0
-                user.balance = current_balance + money_to_add
-                session.commit()
-                session.close()
+                if form.top_up.data:
+                    money_to_add = int(form.top_up.data)
+                    current_balance = user.balance if user.balance else 0
+                    user.balance = current_balance + money_to_add
+                    session.commit()
+                    session.close()
             return redirect(url_for('top_up_acc'))
 
         if form.submit_subscription.data:
