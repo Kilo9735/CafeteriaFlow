@@ -117,6 +117,7 @@
   │   ├── breakfast/             # Папка с изображениями завтраков  
   │   └── lunch/                 # Папка с изображениями обедов  
   │  
+  ├── admin_dashboard.css        # Стиль для admin_dashboard.html  
   ├── alergen_add.css            # Стиль для alergen_add.html  
   ├── bascket.css                # Стиль для bascket.html  
   ├── cook_dashboard.css         # Стиль для cook_dashboard.html  
@@ -129,6 +130,7 @@
   └── top_up_acc.css             # Стиль для top_up_acc.html  
     
   templates/                     # HTML шаблоны  
+  ├── admin_dashboard.html  
   ├── alergen_add.html  
   ├── bascket.html  
   ├── cook_dashboard.html  
